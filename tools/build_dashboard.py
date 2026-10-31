@@ -107,6 +107,16 @@ def main() -> None:
     test_rows = [[t["title"], t["category"], t["severity"].title(), ", ".join(t["requirements"]), rk.pill(t["status"])] for t in tests]
     body += rk.section("All tests", rk.table(["Test", "Category", "Severity", "Requirements", "Result"], test_rows, {4}))
 
+    pass_rate = 100 * passed / max(1, len(executed))
+    takeaways = [
+        f"{passed} of {len(executed)} automated security tests pass ({pass_rate:.0f}%), covering the OWASP API Security Top 10 and the HSM's key, PIN and MAC controls.",
+        (f"{len(open_findings)} open finding{'s' if len(open_findings) != 1 else ''} ("
+         + ", ".join(f"{n} {s.lower()}" for s, n in Counter(f["severity"] for f in open_findings).items())
+         + "), each with an owner, a remediation plan and an automated re-test that flags the fix as soon as it lands."
+         if open_findings else "No open security findings."),
+        f"{met} of {len(REQUIREMENTS)} security requirements from the business requirements document are fully met.",
+        "No unexpected failures since the last run." if not unexpected else f"{unexpected} unexpected failure{'s' if unexpected != 1 else ''} since the last run: investigate before release.",
+    ]
     html = rk.page(
         title="HSM API Security Testing",
         eyebrow="SDET · Security testing",
@@ -114,6 +124,7 @@ def main() -> None:
         body=body,
         repo="hsm-api-security-lab",
         verdict=verdict,
+        takeaways=takeaways,
     )
     out = ROOT / "site"
     rk.write(str(out / "index.html"), html)
