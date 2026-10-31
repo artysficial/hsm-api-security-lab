@@ -303,7 +303,7 @@ def page(*, title: str, eyebrow: str, summary: str, body: str, repo: str, verdic
 </head>
 <body data-report="{esc(title)}">
 <header class="top">
-  <div class="actions"><a href="{PORTFOLIO}#projects" class="btn back" data-back aria-label="Back to the portfolio"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15 18l-6-6 6-6"/></svg><span>Portfolio</span></a><a href="{PORTFOLIO}" class="brand">Rahmadani Tyas Ningrum</a></div>
+  <div class="actions"><a href="{PORTFOLIO}#projects" class="btn back" data-back aria-label="Back to the portfolio"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15 18l-6-6 6-6"/></svg><span>Portfolio</span></a></div>
   <div class="actions">
     <a href="https://github.com/artysficial/{repo}" class="src">Source on GitHub</a>
     <button type="button" class="btn" data-theme-toggle aria-label="Switch to dark mode"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="5"/><path d="M12 1v3M12 20v3M4.2 4.2l2.1 2.1M17.7 17.7l2.1 2.1M1 12h3M20 12h3M4.2 19.8l2.1-2.1M17.7 6.3l2.1-2.1" class="rays"/><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z" class="moon"/></svg><span>Dark</span></button>
@@ -344,15 +344,13 @@ a{color:var(--blue);text-decoration:none}a:hover{text-decoration:underline}
 .sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
 :focus-visible{outline:2px solid var(--blue);outline-offset:2px}
 .top{position:sticky;top:0;z-index:5;display:flex;justify-content:space-between;align-items:center;gap:12px;padding:10px max(20px,calc(50% - 540px));background:color-mix(in srgb,var(--bg) 78%,transparent);backdrop-filter:saturate(180%) blur(20px);-webkit-backdrop-filter:saturate(180%) blur(20px);border-bottom:1px solid var(--line);font-size:14px}
-.brand{color:var(--text);font-weight:600;white-space:nowrap}.actions{display:flex;align-items:center;gap:8px}
+.actions{display:flex;align-items:center;gap:8px}
 .btn{display:inline-flex;align-items:center;gap:6px;border:1px solid var(--line);background:var(--card);color:var(--text);border-radius:980px;padding:6px 14px;font:inherit;font-size:13px;font-weight:500;cursor:pointer}
 .btn:hover{background:var(--hover)}.btn.primary{background:var(--blue);border-color:var(--blue);color:#fff}.btn.primary:hover{filter:brightness(1.08)}
 .btn svg{width:16px;height:16px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
 .btn .moon{display:none}:root[data-theme=dark] .btn .moon{display:block}:root[data-theme=dark] .btn circle,:root[data-theme=dark] .btn .rays{display:none}
 .btn.back{padding-left:8px;text-decoration:none}.btn.back:hover{text-decoration:none}
-@media (max-width:640px){.src{display:none}.btn span{display:none}.btn{padding:8px}.btn.back{padding:6px 12px 6px 6px}.btn.back span{display:inline}}
-@media (max-width:420px){.brand{display:none}}
-::view-transition-old(root),::view-transition-new(root){animation:none;mix-blend-mode:normal}
+@media (max-width:640px){.src{display:none}.btn span{display:none}.btn{padding:8px}.btn.back{padding:6px 12px 6px 6px}.btn.back span{display:inline}}::view-transition-old(root),::view-transition-new(root){animation:none;mix-blend-mode:normal}
 main{max-width:1080px;margin:0 auto;padding:0 20px 64px}
 .hero{text-align:center;padding:64px 0 28px}
 .eyebrow{color:var(--orange);font-weight:600;font-size:15px;margin:0 0 8px}
