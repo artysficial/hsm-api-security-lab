@@ -1,0 +1,20 @@
+[
+  {
+    "id": "HSM-SEC-001",
+    "severity": "Medium",
+    "title": "No lockout after repeated failed client authentication",
+    "requirement": "REQ-HSM-12",
+    "owasp": "API2:2023",
+    "remediation": "Count failures per client; lock for 15 minutes after 10 and alert the security officer",
+    "status": "Open"
+  },
+  {
+    "id": "HSM-SEC-002",
+    "severity": "Low",
+    "title": "Strict-Transport-Security header missing",
+    "requirement": "REQ-HSM-13",
+    "owasp": "API8:2023",
+    "remediation": "Send Strict-Transport-Security: max-age=31536000; includeSubDomains at the gateway",
+    "status": "Open"
+  }
+]

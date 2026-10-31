@@ -1,0 +1,61 @@
+name: Tests and dashboard
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  schedule:
+    - cron: "0 1 * * 1"   # every Monday, 08:00 WIB
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: true
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    outputs:
+      failed: ${{ steps.tests.outputs.failed }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+          cache: pip
+      - run: pip install -r requirements.txt
+      - name: Run tests
+        id: tests
+        # a failing test must not stop the dashboard from being published; the run fails after deploying
+        run: python -m pytest || echo "failed=1" >> "$GITHUB_OUTPUT"
+      - name: Build dashboard
+        run: python tools/build_dashboard.py
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: site
+      - name: Summary
+        run: python -c "import json;d=json.load(open('reports/results.json'));print(d['counts'])" >> "$GITHUB_STEP_SUMMARY"
+
+  deploy:
+    needs: test
+    if: github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - id: deployment
+        uses: actions/deploy-pages@v4
+
+  quality-gate:
+    needs: [test, deploy]
+    if: always()
+    runs-on: ubuntu-latest
+    steps:
+      - name: Fail the run if any test failed unexpectedly
+        run: test "${{ needs.test.outputs.failed }}" != "1" && test "${{ needs.test.result }}" = "success"

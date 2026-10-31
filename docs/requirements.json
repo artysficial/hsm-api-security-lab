@@ -1,0 +1,16 @@
+[
+  {"id": "REQ-HSM-01", "title": "Clients authenticate with OAuth 2.0 client credentials; tokens expire after 15 minutes", "priority": "Must"},
+  {"id": "REQ-HSM-02", "title": "Every endpoint except /health requires a valid, signed bearer token", "priority": "Must"},
+  {"id": "REQ-HSM-03", "title": "Scopes restrict each client to the operations its role needs", "priority": "Must"},
+  {"id": "REQ-HSM-04", "title": "A client can only see and use keys it owns", "priority": "Must"},
+  {"id": "REQ-HSM-05", "title": "Clear key material is never returned by any endpoint", "priority": "Must"},
+  {"id": "REQ-HSM-06", "title": "Keys are bound to one usage (PIN, MAC, key encryption) and refused for any other", "priority": "Must"},
+  {"id": "REQ-HSM-07", "title": "PIN translation supports ISO-0 and ISO-4 and validates PIN blocks", "priority": "Must"},
+  {"id": "REQ-HSM-08", "title": "MAC generation and verification detect any change to the message", "priority": "Must"},
+  {"id": "REQ-HSM-09", "title": "Malformed or hostile input returns a 4xx without internal detail or reflected input", "priority": "Must"},
+  {"id": "REQ-HSM-10", "title": "Sensitive operations are audited without logging PINs, data or keys", "priority": "Must"},
+  {"id": "REQ-HSM-11", "title": "Cryptographic endpoints are rate limited per client", "priority": "Should"},
+  {"id": "REQ-HSM-12", "title": "Ten failed authentications lock the client for 15 minutes", "priority": "Should"},
+  {"id": "REQ-HSM-13", "title": "Responses carry security headers (HSTS, nosniff, no-store, CSP) and no server banner", "priority": "Should"},
+  {"id": "REQ-HSM-14", "title": "Request bodies larger than 16 KB are rejected", "priority": "Could"}
+]
