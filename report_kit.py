@@ -303,7 +303,7 @@ def page(*, title: str, eyebrow: str, summary: str, body: str, repo: str, verdic
 </head>
 <body data-report="{esc(title)}">
 <header class="top">
-  <a href="{PORTFOLIO}" class="brand">Rahmadani Tyas Ningrum</a>
+  <div class="actions"><a href="{PORTFOLIO}#projects" class="btn back" data-back aria-label="Back to the portfolio"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15 18l-6-6 6-6"/></svg><span>Portfolio</span></a><a href="{PORTFOLIO}" class="brand">Rahmadani Tyas Ningrum</a></div>
   <div class="actions">
     <a href="https://github.com/artysficial/{repo}" class="src">Source on GitHub</a>
     <button type="button" class="btn" data-theme-toggle aria-label="Switch to dark mode"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="5"/><path d="M12 1v3M12 20v3M4.2 4.2l2.1 2.1M17.7 17.7l2.1 2.1M1 12h3M20 12h3M4.2 19.8l2.1-2.1M17.7 6.3l2.1-2.1" class="rays"/><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z" class="moon"/></svg><span>Dark</span></button>
@@ -349,7 +349,9 @@ a{color:var(--blue);text-decoration:none}a:hover{text-decoration:underline}
 .btn:hover{background:var(--hover)}.btn.primary{background:var(--blue);border-color:var(--blue);color:#fff}.btn.primary:hover{filter:brightness(1.08)}
 .btn svg{width:16px;height:16px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
 .btn .moon{display:none}:root[data-theme=dark] .btn .moon{display:block}:root[data-theme=dark] .btn circle,:root[data-theme=dark] .btn .rays{display:none}
-@media (max-width:640px){.src{display:none}.btn span{display:none}.btn{padding:8px}}
+.btn.back{padding-left:8px;text-decoration:none}.btn.back:hover{text-decoration:none}
+@media (max-width:640px){.src{display:none}.btn span{display:none}.btn{padding:8px}.btn.back{padding:6px 12px 6px 6px}.btn.back span{display:inline}}
+@media (max-width:420px){.brand{display:none}}
 ::view-transition-old(root),::view-transition-new(root){animation:none;mix-blend-mode:normal}
 main{max-width:1080px;margin:0 auto;padding:0 20px 64px}
 .hero{text-align:center;padding:64px 0 28px}
@@ -451,6 +453,15 @@ JS = r"""
     });
   });
   label();
+
+  // back: when the visitor came from the portfolio's home page, return to their place on it
+  document.querySelector("[data-back]").addEventListener("click", function (e) {
+    var from = document.referrer && new URL(document.referrer);
+    if (from && from.origin === location.origin && /^\/(index\.html)?$/.test(from.pathname) && history.length > 1) {
+      e.preventDefault();
+      history.back();
+    }
+  });
 
   // export: the print stylesheet lays the report out on A4; the title becomes the PDF's file name
   var title = document.title;
