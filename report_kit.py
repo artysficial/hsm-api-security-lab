@@ -307,7 +307,7 @@ def page(*, title: str, eyebrow: str, summary: str, body: str, repo: str, verdic
   <div class="actions">
     <a href="https://github.com/artysficial/{repo}" class="src">Source on GitHub</a>
     <button type="button" class="btn" data-theme-toggle aria-label="Switch to dark mode"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="5"/><path d="M12 1v3M12 20v3M4.2 4.2l2.1 2.1M17.7 17.7l2.1 2.1M1 12h3M20 12h3M4.2 19.8l2.1-2.1M17.7 6.3l2.1-2.1" class="rays"/><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z" class="moon"/></svg><span>Dark</span></button>
-    <button type="button" class="btn primary" data-export title="Opens the print dialog: choose “Save as PDF”"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3v12m0 0-5-5m5 5 5-5M4 17v3h16v-3"/></svg><span>Export PDF</span></button>
+    <button type="button" class="btn primary" data-export data-goatcounter-click="pdf-export/{esc(repo)}" data-goatcounter-title="PDF export: {esc(title)}" title="Opens the print dialog: choose “Save as PDF”"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3v12m0 0-5-5m5 5 5-5M4 17v3h16v-3"/></svg><span>Export PDF</span></button>
   </div>
 </header>
 <main>
@@ -325,6 +325,7 @@ def page(*, title: str, eyebrow: str, summary: str, body: str, repo: str, verdic
 </main>
 <footer>Fictional data for portfolio purposes · <a href="{PORTFOLIO}">artysficial.github.io</a> · Generated {built}</footer>
 <script>{JS}</script>
+<script data-goatcounter="https://artysficial.goatcounter.com/count" async src="https://gc.zgo.at/count.js"></script>
 </body>
 </html>"""
 
