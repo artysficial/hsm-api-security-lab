@@ -163,8 +163,12 @@ def grid(*cards: str) -> str:
     return f'<div class="grid2">{"".join(cards)}</div>'
 
 
+_last_page: dict = {}
+
+
 def page(*, title: str, eyebrow: str, summary: str, body: str, repo: str, verdict: tuple[str, str] | None = None) -> str:
     """verdict: (label, tone) shown as the headline status, e.g. ("Go", "ok")."""
+    _last_page.update(title=title, eyebrow=eyebrow, repo=repo, verdict=verdict[0] if verdict else "", tone=verdict[1] if verdict else "neutral")
     built = datetime.now(timezone.utc).strftime("%d %b %Y, %H:%M UTC")
     siblings = "".join(
         f'<a href="{PORTFOLIO}{slug}/" class="{"current" if slug == repo else ""}"><span>{esc(role)}</span>{esc(name)}</a>'
@@ -248,8 +252,20 @@ footer{text-align:center;color:var(--muted);font-size:12px;padding:24px}
 
 
 def write(path: str, content: str) -> None:
+    """Writes a page. Next to a dashboard's index.html it also writes summary.json (verdict and
+    test counts), which the portfolio site reads to show each project's live status."""
+    import json
     import os
 
     os.makedirs(os.path.dirname(path) or ".", exist_ok=True)
     with open(path, "w", encoding="utf-8") as handle:
         handle.write(content)
+    if os.path.basename(path) == "index.html" and _last_page:
+        counts = {}
+        results = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(path))), "reports", "results.json")
+        if os.path.exists(results):
+            with open(results, encoding="utf-8") as handle:
+                counts = json.load(handle).get("counts", {})
+        summary = {**_last_page, "counts": counts, "generated": datetime.now(timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ")}
+        with open(os.path.join(os.path.dirname(path), "summary.json"), "w", encoding="utf-8") as handle:
+            json.dump(summary, handle, indent=2)
